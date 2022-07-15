@@ -17,6 +17,7 @@ const errorHandlerMiddleware = require("./middleware/error-handler");
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static("public"));
 
 app.get("/", (req, res) => {
   res.send("UNIQLO SHOP API");
