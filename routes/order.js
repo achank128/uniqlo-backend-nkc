@@ -18,8 +18,8 @@ router
   .route("/")
   .get(authenticateAdmin, getAllOrders)
   .post(authenticate, createOrder);
-router.route("/myOrders").get(authenticate, getUserOrders);
-router.route("/myPurchase").get(authenticate, getUserPurchase);
+router.route("/myOrders/:id").get(authenticateUser, getUserOrders);
+router.route("/myPurchase/:id").get(authenticateUser, getUserPurchase);
 router
   .route("/:id")
   .get(authenticate, getOrder)

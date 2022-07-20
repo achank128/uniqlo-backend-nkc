@@ -3,7 +3,7 @@ const CustomError = require("../errors");
 
 const getAllUsers = async (req, res) => {
   const users = await User.find({ isAdmin: false }).select("-password");
-  res.status(200).json({ users });
+  res.status(200).json(users);
 };
 
 const getUser = async (req, res) => {
@@ -12,6 +12,14 @@ const getUser = async (req, res) => {
     throw new CustomError.NotFoundError(`No user with id : ${req.params.id}`);
   }
   res.status(200).json({ user });
+};
+
+const deleteUser = async (req, res) => {
+  const user = await User.findByIdAndDelete(req.params.id);
+  if (!user) {
+    throw new CustomError.NotFoundError(`No user with id : ${req.params.id}`);
+  }
+  res.status(200).json({ msg: "User has been deleted!" });
 };
 
 const updateUserPassword = async (req, res) => {
@@ -33,5 +41,6 @@ const updateUserPassword = async (req, res) => {
 module.exports = {
   getAllUsers,
   getUser,
+  deleteUser,
   updateUserPassword,
 };

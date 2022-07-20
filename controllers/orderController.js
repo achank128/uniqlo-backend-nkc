@@ -1,7 +1,6 @@
 const Order = require("../models/Order");
 const Product = require("../models/Product");
 const CustomError = require("../errors");
-const { findOneAndUpdate } = require("../models/Product");
 
 const createOrder = async (req, res) => {
   const { subtotal, shippingFee, total, products } = req.body;
@@ -38,13 +37,13 @@ const getOrder = async (req, res) => {
 };
 
 const getUserOrders = async (req, res) => {
-  const userOrders = await Order.find({ userId: req.user.userId });
+  const userOrders = await Order.find({ userId: req.params.id });
   res.status(200).json({ userOrders, count: userOrders.length });
 };
 
 const getUserPurchase = async (req, res) => {
   const userPurchase = await Order.find({
-    userId: req.user.userId,
+    userId: req.params.id,
     status: "delivered",
   });
   res.status(200).json({ userPurchase, count: userPurchase.length });

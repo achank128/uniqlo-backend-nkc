@@ -1,7 +1,7 @@
 const Product = require("../models/Product");
 const CustomError = require("../errors");
 
-const getAllProducts = async (req, res) => {
+const getProducts = async (req, res) => {
   const queryObject = {};
   const { search, category, sort } = req.query;
   const pageSize = req.query.pageSize || 12;
@@ -29,6 +29,11 @@ const getAllProducts = async (req, res) => {
   const products = await result;
 
   res.status(200).json({ products, count: allProduct.length });
+};
+
+const getAllProducts = async (req, res) => {
+  const products = await Product.find();
+  res.status(200).json(products);
 };
 
 const getProduct = async (req, res) => {
@@ -68,6 +73,7 @@ const deleteProduct = async (req, res) => {
 
 module.exports = {
   getAllProducts,
+  getProducts,
   getProduct,
   createProduct,
   updateProduct,
